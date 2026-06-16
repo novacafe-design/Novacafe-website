@@ -26,3 +26,26 @@ tmp/
 *.bak
 *.backup
 *.orig
+
+# Unused image assets — kept locally, not committed (superseded by .webp or orphaned)
+/images/BARISTA PLACE.jpg
+/images/CAFE CUPS.png
+/images/COFFEE BEANS WITH CUP.jpg
+/images/COFFEE BREWER.png
+/images/COFFEE SPILLING.jpg
+/images/branded cup NOVA.png
+/images/coffe farm ethiopia.jpg
+/images/coffee bar.jpg
+/images/coffee with heart.jpg
+/images/new images/coffee brewed.png
+/images/new images/coffee prepare.jpg
+/images/new images/hot coffee branded.png
+/images/new images/matcha nova.jpeg
+/images/new images/nova profile icon.png
+/images/new images/nova profile icon.webp
+/images/new images/nova splash coffee.png
+/images/new images/strawberry drink nova.jpeg
+/images/new images/strawberry matcha.jpeg
+/images/nova cup laptop.png
+/images/nova-exterior.jpeg
+/images/nova-logo.png
