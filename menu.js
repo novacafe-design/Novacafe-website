@@ -24,9 +24,9 @@ const MENU = [
     label: "Coffee · Hot",
     title: "From the Bar",
     description: "Pulled all day. Where two prices show, it is small or large.",
-    extras: "Add cold foam +150 · Non-dairy milk (soy, almond, oat) +120",
+    extras: "Add cold foam +150 · Non-dairy milk (soy, almond, oat) +120 · Syrup +80 · Sauce +70",
     items: [
-      { name: "Espresso",          desc: "A single, slow extraction.",                          price: "200",       tag: "",                       img: "images/menu/espresso.webp" },
+      { name: "Espresso",          desc: "A single, slow extraction.",                          price: "200 / 350", tag: "",                       img: "images/menu/espresso.webp" },
       { name: "Cappuccino",        desc: "Soft foam, fine cocoa, an old friend.",               price: "280 / 350", tag: "",                       img: "images/menu/cappuccino.webp" },
       { name: "Latte",             desc: "Long and creamy. Vanilla or caramel.",                price: "300 / 400", tag: "", popular: true,         img: "images/menu/latte.webp" },
       { name: "Spanish Latte",     desc: "Espresso, steamed milk, a thread of condensed milk.", price: "300 / 400", tag: "",                       img: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=300&q=80" },
@@ -41,13 +41,15 @@ const MENU = [
     label: "Coffee · Iced",
     title: "Cold & Slow",
     description: "Built over ice for the warm afternoons.",
-    extras: "Add cold foam +150 · Non-dairy milk (soy, almond, oat) +120",
+    extras: "Add cold foam +150 · Non-dairy milk (soy, almond, oat) +120 · Syrup +80 · Sauce +70",
     items: [
       { name: "Iced Latte",         desc: "Double shot, cold milk, ice. Vanilla or caramel.", price: "450", tag: "",                          img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=300&q=80" },
-      { name: "Iced Spanish Latte", desc: "Sweet, milky, the crowd favourite over ice.",      price: "450", tag: "", popular: true,            img: "images/menu/iced-spanish-latte.webp" },
+      { name: "Iced Spanish Latte", desc: "Sweet, milky, the crowd favourite over ice.",      price: "580", tag: "", popular: true,            img: "images/menu/iced-spanish-latte.webp" },
       { name: "Iced Cappuccino",    desc: "Espresso, cold milk, a soft cap of foam.",         price: "300", tag: "",                          img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=300&q=80" },
       { name: "Iced Americano",     desc: "Espresso, cold water, ice. Clean and bright.",     price: "270", tag: "",                          img: "https://images.unsplash.com/photo-1559496417-e7f25cb247cd?auto=format&fit=crop&w=300&q=80" },
       { name: "Iced Mocha",         desc: "Dark chocolate, espresso, cold milk over ice.",    price: "400", tag: "",                          img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=300&q=80" },
+      { name: "Monte Blanc",        desc: "Iced espresso, cold milk, a cloud of whipped vanilla cream.", price: "700", tag: "",                img: "" },
+      { name: "Nova Special Latte", desc: "Our signature iced latte, crowned with cold foam.", price: "800", tag: "signature",                img: "" },
       { name: "Vanilla Shake",      desc: "Blended vanilla, cold milk, soft serve finish.",   price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=300&q=80" },
       { name: "Espresso Shake",     desc: "Espresso blended cold with vanilla cream.",        price: "550", tag: "",                          img: "https://images.unsplash.com/photo-1559525839-d9acfd02c9e0?auto=format&fit=crop&w=300&q=80" },
       { name: "Lotus Shake",        desc: "Blended Lotus Biscoff, milk, biscuit crumb.",      price: "550", tag: "",                          img: "images/menu/lotus-shake.webp" },
@@ -63,10 +65,11 @@ const MENU = [
     description: "Ceremonial-grade matcha, whisked to order with cold milk.",
     items: [
       { name: "Vanilla Matcha",      desc: "Matcha, vanilla, cold milk, ice.",                       price: "650", tag: "",                          img: "images/menu/vanilla-matcha.webp" },
-      { name: "Caramel Matcha",      desc: "Matcha, salted caramel, cold milk.",                     price: "650", tag: "",                          img: "images/menu/caramel-matcha.webp" },
+      { name: "Caramel Matcha",      desc: "Matcha, salted caramel, cold milk.",                     price: "750", tag: "",                          img: "images/menu/caramel-matcha.webp" },
       { name: "Strawberry Matcha",   desc: "Matcha, fresh strawberry, cold milk.",                   price: "650", tag: "", popular: true,            img: "images/menu/strawberry-matcha.webp" },
       { name: "Blueberry Matcha",    desc: "Matcha, wild blueberry compote, cold milk.",             price: "650", tag: "",                          img: "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=300&q=80" },
-      { name: "Nova Special Matcha", desc: "Our matcha, crowned with vanilla cold foam.",            price: "800", tag: "signature",                 img: "images/menu/nova-special-matcha.webp" }
+      { name: "Nova Special Matcha", desc: "Our matcha, crowned with vanilla cold foam.",            price: "800", tag: "signature",                 img: "images/menu/nova-special-matcha.webp" },
+      { name: "Coconut Cloud",       desc: "Matcha, coconut milk, a drift of vanilla cold foam.",   price: "800", tag: "new",                      img: "" }
     ]
   },
   {
@@ -75,12 +78,14 @@ const MENU = [
     title: "Garden & Glass",
     description: "Built tall with crushed ice, mint, lime, and a long stir.",
     items: [
-      { name: "Strawberry Mojito", desc: "Muddled strawberry, mint, lime, soda.",           price: "450", tag: "",                          img: "images/menu/strawberry-mojito.webp" },
-      { name: "Passion Mojito",    desc: "Passion fruit, mint, lime, soda.",                price: "450", tag: "",                          img: "images/menu/passion-mojito.webp" },
+      { name: "Strawberry Mojito", desc: "Muddled strawberry, mint, lime, soda.",           price: "500", tag: "",                          img: "images/menu/strawberry-mojito.webp" },
+      { name: "Passion Mojito",    desc: "Passion fruit, mint, lime, soda.",                price: "500", tag: "",                          img: "images/menu/passion-mojito.webp" },
       { name: "Kiwi Mojito",       desc: "Fresh kiwi, mint, lime, soda.",                   price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1623778029112-cf9c5e93e83a?auto=format&fit=crop&w=300&q=80" },
-      { name: "Blueberry Mojito",  desc: "Blueberry, mint, lime, soda.",                    price: "450", tag: "",                          img: "images/menu/blueberry-mojito.webp" },
-      { name: "Peach Mojito",      desc: "White peach, mint, lime, soda.",                  price: "450", tag: "",                          img: "https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?auto=format&fit=crop&w=300&q=80" },
-      { name: "Blue Lagoon",       desc: "Blue curaçao tones, mint, lime, soda.",           price: "450", tag: "",                          img: "images/menu/blue-lagoon.webp" },
+      { name: "Blueberry Mojito",  desc: "Blueberry, mint, lime, soda.",                    price: "500", tag: "",                          img: "images/menu/blueberry-mojito.webp" },
+      { name: "Peach Mojito",      desc: "White peach, mint, lime, soda.",                  price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?auto=format&fit=crop&w=300&q=80" },
+      { name: "Blue Lagoon",       desc: "Blue curaçao tones, mint, lime, soda.",           price: "500", tag: "",                          img: "images/menu/blue-lagoon.webp" },
+      { name: "Classic Mojito",    desc: "Mint, lime, sugar, soda. The original.",          price: "500", tag: "",                          img: "" },
+      { name: "Mango Mojito",      desc: "Fresh mango, mint, lime, soda.",                  price: "500", tag: "",                          img: "" },
       { name: "Nova Select",       desc: "Espresso Mojito, Espresso Tornado, or Americano Honey. Ask the bar.", price: "550", tag: "signature", popular: true, img: "images/menu/nova-select.webp" }
     ]
   },
@@ -88,7 +93,7 @@ const MENU = [
     id: "snacks",
     label: "Snacks",
     title: "Something to Bite",
-    description: "Quick, hot, made to share. Add fries to any plate for 100.",
+    description: "Quick, hot, made to share. Add fries to any plate for 200.",
     items: [
       { name: "Potato Waffles",    desc: "Crisp potato waffle, shredded chicken, melted cheese.",       price: "700", tag: "signature", popular: true, img: "images/menu/potato-waffles.webp" },
       { name: "Nova Burger Wrap",  desc: "Beef or chicken patty, our sauces, rolled in tortilla.",     price: "650", tag: "signature",                 img: "images/menu/nova-burger-wrap.webp" }
@@ -102,7 +107,8 @@ const MENU = [
     items: [
       { name: "Tiramisu Balls",         desc: "Mascarpone and espresso-soaked sponge, rolled in cocoa.",   price: "470", tag: "",          img: "images/menu/tiramisu-balls.webp" },
       { name: "Sticky Toffee Pudding",  desc: "Warm date sponge, toffee sauce, soft cream.",               price: "450", tag: "",          img: "images/menu/sticky-toffee.webp" },
-      { name: "Japanese Cream Sandwich", desc: "Milk bread, whipped cream, your choice of pistachio, strawberry, maple, or chocolate.", price: "250", tag: "new", popular: true, img: "images/menu/japanese-cream-sandwich.webp" }
+      { name: "Fruit Mousse",           desc: "Whipped mousse, seasonal fruit, a light finish.",           price: "380", tag: "",          img: "" },
+      { name: "Cheese Bread",           desc: "Two pieces, warm from the oven. Pistachio, chocolate, or Lotus filling.", price: "350", tag: "", img: "" }
     ]
   }
 ];
