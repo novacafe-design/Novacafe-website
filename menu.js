@@ -33,7 +33,7 @@ const MENU = [
       { name: "Americano",         desc: "Espresso lengthened with hot water.",                 price: "220 / 300", tag: "",                       img: "https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=300&q=80" },
       { name: "Hot Chocolate",     desc: "Dark chocolate, steamed milk, a quiet finish.",       price: "350 / 500", tag: "",                       img: "images/menu/hot-chocolate.webp" },
       { name: "Mocha",             desc: "House dark chocolate, espresso, steamed milk.",       price: "250 / 350", tag: "",                       img: "images/menu/mocha.webp" },
-      { name: "Karak Tea",         desc: "Black tea, evaporated milk, cardamom, slow simmer.",  price: "250 / 350", tag: "",                       img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=300&q=80" }
+      { name: "Karak Tea",         desc: "Black tea, evaporated milk, cardamom, slow simmer.",  price: "250 / 350", tag: "",                       img: "images/menu/karak-tea.webp" }
     ]
   },
   {
@@ -43,19 +43,19 @@ const MENU = [
     description: "Built over ice for the warm afternoons.",
     extras: "Add cold foam +150 · Non-dairy milk (soy, almond, oat) +120 · Syrup +80 · Sauce +70",
     items: [
-      { name: "Iced Latte",         desc: "Double shot, cold milk, ice. Vanilla or caramel.", price: "450", tag: "",                          img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=300&q=80" },
+      { name: "Iced Latte",         desc: "Double shot, cold milk, ice. Vanilla or caramel.", price: "450", tag: "",                          img: "images/menu/iced-latte.webp" },
       { name: "Iced Spanish Latte", desc: "Sweet, milky, the crowd favourite over ice.",      price: "580", tag: "", popular: true,            img: "images/menu/iced-spanish-latte.webp" },
-      { name: "Iced Cappuccino",    desc: "Espresso, cold milk, a soft cap of foam.",         price: "300", tag: "",                          img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=300&q=80" },
-      { name: "Iced Americano",     desc: "Espresso, cold water, ice. Clean and bright.",     price: "270", tag: "",                          img: "https://images.unsplash.com/photo-1559496417-e7f25cb247cd?auto=format&fit=crop&w=300&q=80" },
+      { name: "Iced Cappuccino",    desc: "Espresso, cold milk, a soft cap of foam.",         price: "300", tag: "",                          img: "images/menu/iced-cappuccino.webp" },
+      { name: "Iced Americano",     desc: "Espresso, cold water, ice. Clean and bright.",     price: "270", tag: "",                          img: "images/menu/iced-americano.webp" },
       { name: "Iced Mocha",         desc: "Dark chocolate, espresso, cold milk over ice.",    price: "400", tag: "",                          img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=300&q=80" },
-      { name: "Monte Blanc",        desc: "Iced espresso, cold milk, a cloud of whipped vanilla cream.", price: "700", tag: "",                img: "" },
-      { name: "Nova Special Latte", desc: "Our signature iced latte, crowned with cold foam.", price: "800", tag: "signature",                img: "" },
-      { name: "Vanilla Shake",      desc: "Blended vanilla, cold milk, soft serve finish.",   price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=300&q=80" },
-      { name: "Espresso Shake",     desc: "Espresso blended cold with vanilla cream.",        price: "550", tag: "",                          img: "https://images.unsplash.com/photo-1559525839-d9acfd02c9e0?auto=format&fit=crop&w=300&q=80" },
+      { name: "Monte Blanc",        desc: "Iced espresso, cold milk, a cloud of whipped vanilla cream.", price: "700", tag: "",                img: "images/menu/monte-blanc.webp" },
+      { name: "Nova Special Latte", desc: "Our signature iced latte, crowned with cold foam.", price: "800", tag: "signature",                img: "images/menu/nova-special-latte.webp" },
+      { name: "Vanilla Shake",      desc: "Blended vanilla, cold milk, soft serve finish.",   price: "500", tag: "",                          img: "images/menu/vanilla-shake.webp" },
+      { name: "Espresso Shake",     desc: "Espresso blended cold with vanilla cream.",        price: "550", tag: "",                          img: "images/menu/espresso-shake.webp" },
       { name: "Lotus Shake",        desc: "Blended Lotus Biscoff, milk, biscuit crumb.",      price: "550", tag: "",                          img: "images/menu/lotus-shake.webp" },
-      { name: "Iced Karak",         desc: "Our cardamom karak, chilled and poured over ice.", price: "650", tag: "",                          img: "https://images.unsplash.com/photo-1558122104-355edad709f6?auto=format&fit=crop&w=300&q=80" },
-      { name: "Iced Karak + Shot",  desc: "Iced karak laced with a shot of espresso.",        price: "780", tag: "new",                       img: "https://images.unsplash.com/photo-1518057111178-44a106bad636?auto=format&fit=crop&w=300&q=80" },
-      { name: "Karak Krusher",      desc: "Karak, blended to a snow. Cold, spiced, slushy.",  price: "750", tag: "signature",                 img: "https://images.unsplash.com/photo-1558857563-c0c6ee6ff8a4?auto=format&fit=crop&w=300&q=80" }
+      { name: "Iced Karak",         desc: "Our cardamom karak, chilled and poured over ice.", price: "650", tag: "",                          img: "images/menu/iced-karak.webp" },
+      { name: "Iced Karak + Shot",  desc: "Iced karak laced with a shot of espresso.",        price: "780", tag: "new",                       img: "images/menu/iced-karak-shot.webp" },
+      { name: "Karak Krusher",      desc: "Karak, blended to a snow. Cold, spiced, slushy.",  price: "750", tag: "signature",                 img: "images/menu/karak-krusher.webp" }
     ]
   },
   {
@@ -67,9 +67,9 @@ const MENU = [
       { name: "Vanilla Matcha",      desc: "Matcha, vanilla, cold milk, ice.",                       price: "650", tag: "",                          img: "images/menu/vanilla-matcha.webp" },
       { name: "Caramel Matcha",      desc: "Matcha, salted caramel, cold milk.",                     price: "750", tag: "",                          img: "images/menu/caramel-matcha.webp" },
       { name: "Strawberry Matcha",   desc: "Matcha, fresh strawberry, cold milk.",                   price: "650", tag: "", popular: true,            img: "images/menu/strawberry-matcha.webp" },
-      { name: "Blueberry Matcha",    desc: "Matcha, wild blueberry compote, cold milk.",             price: "650", tag: "",                          img: "https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=300&q=80" },
+      { name: "Blueberry Matcha",    desc: "Matcha, wild blueberry compote, cold milk.",             price: "650", tag: "",                          img: "images/menu/blueberry-matcha.webp" },
       { name: "Nova Special Matcha", desc: "Our matcha, crowned with vanilla cold foam.",            price: "800", tag: "signature",                 img: "images/menu/nova-special-matcha.webp" },
-      { name: "Coconut Cloud",       desc: "Matcha, coconut milk, a drift of vanilla cold foam.",   price: "800", tag: "new",                      img: "" }
+      { name: "Coconut Cloud",       desc: "Matcha, coconut milk, a drift of vanilla cold foam.",   price: "800", tag: "new",                      img: "images/menu/coconut-cloud.webp" }
     ]
   },
   {
@@ -80,12 +80,12 @@ const MENU = [
     items: [
       { name: "Strawberry Mojito", desc: "Muddled strawberry, mint, lime, soda.",           price: "500", tag: "",                          img: "images/menu/strawberry-mojito.webp" },
       { name: "Passion Mojito",    desc: "Passion fruit, mint, lime, soda.",                price: "500", tag: "",                          img: "images/menu/passion-mojito.webp" },
-      { name: "Kiwi Mojito",       desc: "Fresh kiwi, mint, lime, soda.",                   price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1623778029112-cf9c5e93e83a?auto=format&fit=crop&w=300&q=80" },
+      { name: "Kiwi Mojito",       desc: "Fresh kiwi, mint, lime, soda.",                   price: "500", tag: "",                          img: "images/menu/kiwi-mojito.webp" },
       { name: "Blueberry Mojito",  desc: "Blueberry, mint, lime, soda.",                    price: "500", tag: "",                          img: "images/menu/blueberry-mojito.webp" },
-      { name: "Peach Mojito",      desc: "White peach, mint, lime, soda.",                  price: "500", tag: "",                          img: "https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?auto=format&fit=crop&w=300&q=80" },
+      { name: "Peach Mojito",      desc: "White peach, mint, lime, soda.",                  price: "500", tag: "",                          img: "images/menu/peach-mojito.webp" },
       { name: "Blue Lagoon",       desc: "Blue curaçao tones, mint, lime, soda.",           price: "500", tag: "",                          img: "images/menu/blue-lagoon.webp" },
-      { name: "Classic Mojito",    desc: "Mint, lime, sugar, soda. The original.",          price: "500", tag: "",                          img: "" },
-      { name: "Mango Mojito",      desc: "Fresh mango, mint, lime, soda.",                  price: "500", tag: "",                          img: "" },
+      { name: "Classic Mojito",    desc: "Mint, lime, sugar, soda. The original.",          price: "500", tag: "",                          img: "images/menu/classic-mojito.webp" },
+      { name: "Mango Mojito",      desc: "Fresh mango, mint, lime, soda.",                  price: "500", tag: "",                          img: "images/menu/mango-mojito.webp" },
       { name: "Nova Select",       desc: "Espresso Mojito, Espresso Tornado, or Americano Honey. Ask the bar.", price: "550", tag: "signature", popular: true, img: "images/menu/nova-select.webp" }
     ]
   },
@@ -107,8 +107,8 @@ const MENU = [
     items: [
       { name: "Tiramisu Balls",         desc: "Mascarpone and espresso-soaked sponge, rolled in cocoa.",   price: "470", tag: "",          img: "images/menu/tiramisu-balls.webp" },
       { name: "Sticky Toffee Pudding",  desc: "Warm date sponge, toffee sauce, soft cream.",               price: "450", tag: "",          img: "images/menu/sticky-toffee.webp" },
-      { name: "Fruit Mousse",           desc: "Whipped mousse, seasonal fruit, a light finish.",           price: "380", tag: "",          img: "" },
-      { name: "Cheese Bread",           desc: "Two pieces, warm from the oven. Pistachio, chocolate, or Lotus filling.", price: "350", tag: "", img: "" }
+      { name: "Fruit Mousse",           desc: "Whipped mousse, seasonal fruit, a light finish.",           price: "380", tag: "",          img: "images/menu/fruit-mousse.webp" },
+      { name: "Cheese Bread",           desc: "Two pieces, warm from the oven. Pistachio, chocolate, or Lotus filling.", price: "350", tag: "", img: "images/menu/cheese-bread.webp" }
     ]
   }
 ];
