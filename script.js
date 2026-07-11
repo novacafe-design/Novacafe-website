@@ -93,6 +93,68 @@ document.querySelectorAll(".g").forEach((el, i) => {
   observer.observe(el);
 });
 
+// Shared: does this device ask for reduced motion?
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Tagline band - crossfade through the phrases one at a time.
+// Under reduced motion (or without JS) the first phrase stays as a static line.
+const tagbandText = document.getElementById("tagbandText");
+if (tagbandText && !reduceMotion) {
+  const TAGLINES = [
+    "Specialty Coffee",
+    "Hand-crafted Pastries",
+    "All-Day Breakfast",
+    "Halal Kitchen",
+    "Arabic Hospitality"
+  ];
+  const phrase = document.getElementById("tagbandPhrase");
+  let tagIndex = 0;
+  setInterval(() => {
+    if (document.hidden) return; // don't churn in background tabs
+    phrase.classList.add("is-out"); // slide down out of the clipped band
+    setTimeout(() => {
+      tagIndex = (tagIndex + 1) % TAGLINES.length;
+      tagbandText.textContent = TAGLINES[tagIndex];
+      phrase.classList.add("is-prep");     // jump above the band, no transition
+      phrase.classList.remove("is-out");
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        phrase.classList.remove("is-prep"); // slide back in from the top
+      }));
+    }, 470); // just past the CSS transition duration
+  }, 4200);
+}
+
+// Hero stats - count up once as the stats row fades in.
+// Final values live in the HTML, so no JS means no change and
+// reduced motion shows them instantly.
+if (!reduceMotion) {
+  const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+  setTimeout(() => {
+    document.querySelectorAll(".hero-meta .meta-num").forEach(el => {
+      const m = el.textContent.match(/^(\D*?)([\d.]+)(\D*)$/);
+      if (!m) return;
+      const [, prefix, numStr, suffix] = m;
+      const target = parseFloat(numStr);
+      const decimals = (numStr.split(".")[1] || "").length;
+      const padded = /^0\d/.test(numStr) ? numStr.length : 0;
+      // Reserve the final width so neighbouring stats don't jitter
+      el.style.minWidth = el.offsetWidth + "px";
+      el.style.display = "inline-block";
+      el.style.textAlign = "center";
+      const start = performance.now();
+      const duration = 1400;
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        let value = (target * easeOutCubic(p)).toFixed(decimals);
+        if (padded) value = String(Math.round(value)).padStart(padded, "0");
+        el.textContent = prefix + value + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = prefix + numStr + suffix;
+      })(start);
+    });
+  }, 1500); // begins as the stats row's fade-in (1.4s delay) is underway
+}
+
 // Reservation form: submit to Formspree in place instead of leaving the site.
 // If JS is unavailable the form still posts natively to Formspree's page.
 const reservationForm = document.querySelector(".visit-form");

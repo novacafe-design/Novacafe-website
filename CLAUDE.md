@@ -108,6 +108,10 @@ The form posts to Formspree (`mykodwqg`, delivers to novacafe.ke@gmail.com). `sc
 
 **Change social links** → `index.html`, search for `Instagram`.
 
+**Change the rotating taglines** (band under the hero) → `TAGLINES` array in `script.js`. The first phrase in `index.html` (`#tagbandText`) is what no-JS and reduced-motion visitors see — keep it the strongest one.
+
+**Change the orbit badge text** (rotating ring on the story photo) → `<textPath>` in `index.html`; keep it short enough to fit the ring (`textLength="288"` distributes it evenly).
+
 ## Git Setup Note
 
 This folder was initialized as a git repo locally (not cloned). The remote is:

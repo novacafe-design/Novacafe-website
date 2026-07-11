@@ -590,37 +590,94 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
 }
 
 /* ============================================
-   MARQUEE
+   TAGLINE BAND
+   One phrase at a time; script.js crossfades through
+   the list. With reduced motion (or no JS) it simply
+   shows the first phrase - an intentional static state.
    ============================================ */
-.marquee {
+.tagband {
   background: var(--bg-warm);
   color: var(--ink-soft);
   padding: 1.4rem 0;
   overflow: hidden;
+  text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  --mq-gap: 3rem;
-  gap: var(--mq-gap);
-  white-space: nowrap;
-  animation: marquee 55s linear infinite;
+/* Phrases swap by sliding through the band's clipped edges
+   (transform only - text keeps full contrast whenever visible,
+   so mid-transition never dips below WCAG thresholds). */
+.tagband-phrase {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
   font-family: var(--font-display);
   font-size: 1.4rem;
   font-style: italic;
   font-weight: 400;
+  white-space: nowrap;
+  transition: transform 0.45s cubic-bezier(0.55, 0, 0.55, 0.2);
 }
-.marquee-track .dot {
+.tagband-phrase.is-out {
+  transform: translateY(160%);
+}
+.tagband-phrase.is-prep {
+  transition: none;
+  transform: translateY(-160%);
+}
+.tagband-dot {
   color: var(--bronze);
   font-style: normal;
+  font-size: 0.85em;
 }
-/* Track holds two identical copies; width:max-content makes the % resolve against
-   the full content width, and subtracting half a gap lands the loop exactly on one
-   copy so it scrolls seamlessly with no jump at the seam. */
-@keyframes marquee {
-  to { transform: translateX(calc(-50% - (var(--mq-gap) / 2))); }
+
+/* ============================================
+   ORBIT BADGE - rotating text ring stamped on the
+   story image, % Arabica style. Static under
+   reduced motion.
+   ============================================ */
+.orbit-badge {
+  position: absolute;
+  top: -26px;
+  right: -14px;
+  width: 116px;
+  height: 116px;
+  z-index: 3;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  /* clip the square SVG's rotating corners so they never widen the page */
+  overflow: hidden;
+  border-radius: 50%;
+}
+.orbit-ring {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: orbitSpin 30s linear infinite;
+}
+.orbit-text {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  fill: var(--cream);
+}
+.orbit-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--bronze);
+  font-size: 1.1rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+@keyframes orbitSpin {
+  to { transform: rotate(360deg); }
+}
+@media (max-width: 600px) {
+  .orbit-badge { width: 92px; height: 92px; top: -18px; right: -8px; }
 }
 
 /* ============================================
@@ -1419,11 +1476,32 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   grid-template-rows: 280px 280px;
   gap: 1rem;
 }
+
+/* ≤900px: horizontal swipe strip with snap points and edge-peek
+   of the next photo. Motion is user-driven, so it needs no
+   animation and works identically under reduced motion. */
 @media (max-width: 900px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 240px);
+    display: flex;
+    gap: 0.9rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    /* bleed to the viewport edges so photos scroll under them */
+    margin-left: calc(-1 * var(--pad));
+    margin-right: calc(-1 * var(--pad));
+    padding: 0 var(--pad) 0.5rem;
+    scroll-padding-left: var(--pad);
+    scrollbar-width: none;
   }
+  .gallery-grid::-webkit-scrollbar { display: none; }
+  .g {
+    flex: 0 0 min(78vw, 340px);
+    height: 380px;
+    scroll-snap-align: center;
+  }
+  /* strip cells are always visible; scroll-fade reveal is desktop-only */
+  .gallery-grid .g { opacity: 1; transform: none; }
 }
 
 .g {
@@ -1439,12 +1517,6 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
 .g5 { grid-column: span 1; }
 .g6 { grid-column: span 1; }
 
-@media (max-width: 900px) {
-  .g1 { grid-column: span 2; grid-row: span 1; }
-  .g2, .g3, .g4 { grid-column: span 1; }
-  .g5 { grid-column: span 1; }
-  .g6 { grid-column: span 1; }
-}
 
 .g-img {
   position: absolute;
@@ -1760,13 +1832,9 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   /* Feature - constrain large decorative text */
   .feature-arabic { font-size: clamp(4rem, 20vw, 8rem); }
 
-  /* Marquee - calmer, less dominant on mobile */
-  .marquee { padding: 1rem 0; }
-  .marquee-track {
-    font-size: 1.05rem;
-    --mq-gap: 4.5rem;
-    animation-duration: 76s;
-  }
+  /* Tagline band - calmer, less dominant on mobile */
+  .tagband { padding: 1rem 0; }
+  .tagband-phrase { font-size: 1.05rem; }
 }
 
 /* ============================================
@@ -1794,8 +1862,7 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
     background-position: center center;
   }
 
-  /* Gallery - slightly taller cells & gentler framing for narrow widths */
-  .gallery-grid { grid-template-rows: repeat(3, 260px); }
+  /* Gallery strip - gentler framing for narrow widths */
   .g1 .g-img img { object-position: center 18%; }
   .g5 .g-img img { object-position: 55% center; }
   .g6 .g-img img { object-position: center 50%; }
@@ -1858,28 +1925,13 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   /* Give the hero a touch more top padding so content isn't flush */
   .hero { padding-top: 3rem; }
 
-  /* Marquee: even slower on small phones for comfortable reading */
-  .marquee-track {
-    font-size: 1rem;
-    --mq-gap: 5rem;
-    animation-duration: 90s;
-  }
+  /* Tagline band: smaller type on small phones */
+  .tagband-phrase { font-size: 1rem; }
 }
 
-/* Gallery - single column on very narrow screens */
+/* Gallery strip - slightly shorter cells on very narrow screens */
 @media (max-width: 420px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-  .g1, .g2, .g3, .g4, .g5, .g6 {
-    grid-column: span 1;
-    grid-row: span 1;
-    height: 280px;
-  }
-  /* Storefront and splash portraits - keep more room; lift focal point */
-  .g1 { height: 300px; }
-  .g6 { height: 300px; }
+  .g { height: 340px; }
 }
 
 /* ============================================
@@ -2062,6 +2114,6 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
-  /* Stop the marquee entirely rather than looping it at near-zero duration */
-  .marquee-track { animation: none; }
+  /* Decorative motion stops entirely; static states are designed to look intentional */
+  .orbit-ring { animation: none; }
 }

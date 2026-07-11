@@ -66,7 +66,7 @@
     .hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(26,15,8,.08) 0%,rgba(26,15,8,.48) 55%,rgba(15,8,4,.82) 100%),linear-gradient(180deg,rgba(15,8,4,.52) 0%,rgba(26,15,8,.18) 38%,rgba(26,15,8,.38) 72%,rgba(15,8,4,.75) 100%)}
   </style>
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 
   <!-- If JS is unavailable, show all scroll-reveal content immediately -->
   <noscript>
@@ -230,20 +230,13 @@
 
   </section>
 
-  <!-- MARQUEE -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Specialty Coffee</span><span class="dot">✦</span>
-      <span>Hand-crafted Pastries</span><span class="dot">✦</span>
-      <span>All-Day Breakfast</span><span class="dot">✦</span>
-      <span>Halal Kitchen</span><span class="dot">✦</span>
-      <span>Arabic Hospitality</span><span class="dot">✦</span>
-      <span>Specialty Coffee</span><span class="dot">✦</span>
-      <span>Hand-crafted Pastries</span><span class="dot">✦</span>
-      <span>All-Day Breakfast</span><span class="dot">✦</span>
-      <span>Halal Kitchen</span><span class="dot">✦</span>
-      <span>Arabic Hospitality</span><span class="dot">✦</span>
-    </div>
+  <!-- TAGLINE BAND - one phrase at a time, rotated by script.js -->
+  <div class="tagband" aria-hidden="true">
+    <p class="tagband-phrase" id="tagbandPhrase">
+      <span class="tagband-dot">✦</span>
+      <span class="tagband-text" id="tagbandText">Specialty Coffee</span>
+      <span class="tagband-dot">✦</span>
+    </p>
   </div>
 
   <!-- STORY -->
@@ -287,6 +280,17 @@
             <span>NOVA CAFE</span>
             <span>South C, Nairobi</span>
           </div>
+        </div>
+        <div class="orbit-badge" aria-hidden="true">
+          <svg class="orbit-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="orbit-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" fill="none"/>
+            </defs>
+            <text class="orbit-text">
+              <textPath href="#orbit-circle" textLength="288" lengthAdjust="spacingAndGlyphs">NOVA CAFE • EST. 2026 • SOUTH C • NAIROBI •&#160;</textPath>
+            </text>
+          </svg>
+          <span class="orbit-center">✦</span>
         </div>
       </div>
     </div>
@@ -608,6 +612,6 @@
   </footer>
 
   <script src="menu.js?v=3"></script>
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
