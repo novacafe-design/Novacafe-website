@@ -14,9 +14,32 @@ window.addEventListener("scroll", () => {
   scrollProgress.style.transform = `scaleX(${ratio})`;
 }, { passive: true });
 
+// Today's opening hours in the top bar (same table as the Visit section)
+const topbarHours = document.getElementById("topbarHours");
+if (topbarHours) {
+  const HOURS = {
+    0: ["8am", "11pm"], // Sunday
+    1: ["7am", "10pm"],
+    2: ["7am", "10pm"],
+    3: ["7am", "10pm"],
+    4: ["7am", "10pm"],
+    5: ["7am", "11pm"], // Friday
+    6: ["8am", "11pm"]  // Saturday
+  };
+  const [opens, closes] = HOURS[new Date().getDay()];
+  topbarHours.textContent = `Open today · ${opens} to ${closes}`;
+}
+
 // Mobile menu toggle
 const burger = document.getElementById("navBurger");
 const mobileMenu = document.getElementById("mobileMenu");
+
+function closeMobileMenu() {
+  burger.classList.remove("open");
+  mobileMenu.classList.remove("open");
+  burger.setAttribute("aria-expanded", "false");
+  mobileMenu.setAttribute("aria-hidden", "true");
+}
 
 burger.addEventListener("click", () => {
   const isOpen = burger.classList.toggle("open");
@@ -27,21 +50,21 @@ burger.addEventListener("click", () => {
 
 // Close mobile menu on link click
 mobileMenu.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    burger.classList.remove("open");
-    mobileMenu.classList.remove("open");
-    burger.setAttribute("aria-expanded", "false");
-    mobileMenu.setAttribute("aria-hidden", "true");
-  });
+  link.addEventListener("click", closeMobileMenu);
 });
 
 // Close mobile menu on outside click
 document.addEventListener("click", (e) => {
   if (mobileMenu.classList.contains("open") && !nav.contains(e.target)) {
-    burger.classList.remove("open");
-    mobileMenu.classList.remove("open");
-    burger.setAttribute("aria-expanded", "false");
-    mobileMenu.setAttribute("aria-hidden", "true");
+    closeMobileMenu();
+  }
+});
+
+// Close mobile menu on Escape, returning focus to the toggle
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mobileMenu.classList.contains("open")) {
+    closeMobileMenu();
+    burger.focus();
   }
 });
 
@@ -69,3 +92,48 @@ document.querySelectorAll(".g").forEach((el, i) => {
   el.style.transitionDelay = `${i * 0.07}s`;
   observer.observe(el);
 });
+
+// Reservation form: submit to Formspree in place instead of leaving the site.
+// If JS is unavailable the form still posts natively to Formspree's page.
+const reservationForm = document.querySelector(".visit-form");
+if (reservationForm) {
+  // No bookings in the past
+  const dateInput = reservationForm.querySelector('input[name="date"]');
+  if (dateInput) {
+    const t = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    dateInput.min = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+  }
+
+  const statusEl = reservationForm.querySelector(".form-status");
+  const submitBtn = reservationForm.querySelector('button[type="submit"]');
+
+  reservationForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (submitBtn.disabled) return; // guard against double submits
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Sending…";
+    statusEl.className = "form-status";
+    statusEl.textContent = "";
+
+    try {
+      const res = await fetch(reservationForm.action, {
+        method: "POST",
+        body: new FormData(reservationForm),
+        headers: { Accept: "application/json" }
+      });
+      if (!res.ok) throw new Error(`Formspree responded ${res.status}`);
+      reservationForm.reset();
+      statusEl.textContent = "Thank you — your request has been received. We'll confirm your booking within the hour.";
+      statusEl.classList.add("success");
+    } catch (err) {
+      statusEl.textContent = "Something went wrong sending your request. Please try again, or call us on +254 723 334 445.";
+      statusEl.classList.add("error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+}

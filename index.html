@@ -14,20 +14,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nova Café | Coffee &amp; Pastries</title>
   <meta name="description" content="Nova Cafe is a halal specialty coffee shop in South C, Nairobi, near the College of Insurance. Specialty coffee, brunch, fresh pastries, smoothies, and a calm work-friendly space open 7 days a week." />
+  <link rel="canonical" href="https://novacafe.co.ke/" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/NOVA%20CAFE%20FAVICON%20LOGO.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/NOVA%20CAFE%20FAVICON%20LOGO.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="images/NOVA%20CAFE%20FAVICON%20LOGO.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="theme-color" content="#3E2C23" />
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
+  <meta property="og:site_name"   content="NOVA CAFE" />
+  <meta property="og:locale"      content="en_KE" />
   <meta property="og:title"       content="Nova Café | Coffee &amp; Pastries" />
   <meta property="og:description" content="Specialty coffee, baked daily pastries, and a calm space in South C, Nairobi." />
   <meta property="og:url"         content="https://novacafe.co.ke/" />
-  <meta property="og:image"       content="https://novacafe.co.ke/images/new%20images/hot%20coffee%20branded.webp" />
+  <meta property="og:image"       content="https://novacafe.co.ke/images/og-image.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"   content="A NOVA CAFE branded cup of coffee on the bar." />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Nova Café | Coffee &amp; Pastries" />
+  <meta name="twitter:description" content="Specialty coffee, baked daily pastries, and a calm space in South C, Nairobi." />
+  <meta name="twitter:image"       content="https://novacafe.co.ke/images/og-image.jpg" />
 
   <!-- Fonts: non-render-blocking. Browser fetches in parallel; display=swap keeps text visible. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +57,7 @@
     *,*::before,*::after{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{background:#f6efe4;color:#1a1a1a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
-    .hero{position:relative;min-height:calc(100vh - 90px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4rem clamp(1.25rem,4vw,3rem)}
+    .hero{position:relative;min-height:calc(100vh - 90px);min-height:calc(100svh - 90px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4rem clamp(1.25rem,4vw,3rem)}
     .hero-bg{position:absolute;inset:0;background:#1a0f08}
     .hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;opacity:.92;animation:heroPan 24s ease-in-out infinite alternate;will-change:transform;pointer-events:none;user-select:none}
     @keyframes heroPan{from{transform:scale(1.05) translateX(0)}to{transform:scale(1.12) translateX(-1.5%)}}
@@ -55,9 +66,64 @@
     .hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(26,15,8,.08) 0%,rgba(26,15,8,.48) 55%,rgba(15,8,4,.82) 100%),linear-gradient(180deg,rgba(15,8,4,.52) 0%,rgba(26,15,8,.18) 38%,rgba(26,15,8,.38) 72%,rgba(15,8,4,.75) 100%)}
   </style>
 
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+
+  <!-- If JS is unavailable, show all scroll-reveal content immediately -->
+  <noscript>
+    <style>
+      .story-text, .story-image, .menu-header, .gallery-header,
+      .visit-info, .visit-form-wrap, .feature-text, .feature-visual,
+      .story-pillars, .visit-map, .footer-brand, .footer-cols,
+      .brandstrip-text, .brandstrip-image,
+      .signatures-header, .sig-card, .quote-inner, .g {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
+
+  <!-- Local business structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "NOVA CAFE",
+    "description": "Halal specialty coffee shop in South C, Nairobi, near the College of Insurance. Specialty coffee, brunch, fresh pastries, and a calm work-friendly space.",
+    "url": "https://novacafe.co.ke/",
+    "image": "https://novacafe.co.ke/images/og-image.jpg",
+    "logo": "https://novacafe.co.ke/images/icon-192.png",
+    "telephone": "+254723334445",
+    "email": "novacafe.ke@gmail.com",
+    "servesCuisine": ["Coffee", "Pastries", "Brunch"],
+    "priceRange": "KES 200–800",
+    "currenciesAccepted": "KES",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "South C, Nairobi",
+      "addressCountry": "KE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -1.3258969,
+      "longitude": 36.8338999
+    },
+    "hasMap": "https://maps.app.goo.gl/4pnTXQDKUuevMbjb8",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "07:00", "closes": "22:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "23:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "08:00", "closes": "23:00" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/nov.acafe",
+      "https://www.tiktok.com/@nov.acafe"
+    ],
+    "acceptsReservations": "True"
+  }
+  </script>
 </head>
 <body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Scroll progress indicator -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -65,7 +131,7 @@
   <!-- Top Bar -->
   <div class="topbar">
     <div class="topbar-inner">
-      <span>Open today · 7am to 10pm</span>
+      <span id="topbarHours">Open today · 7am to 10pm</span>
       <span class="topbar-divider">·</span>
       <span>South C, Nairobi</span>
     </div>
@@ -102,6 +168,8 @@
       <a href="#visit" class="mobile-cta">Reserve a Table</a>
     </div>
   </header>
+
+  <main id="main">
 
   <!-- HERO -->
   <section class="hero" id="hero">
@@ -196,17 +264,17 @@
         <div class="story-pillars">
           <div class="pillar">
             <span class="pillar-num">01</span>
-            <h4>Single-origin coffee</h4>
+            <h3>Single-origin coffee</h3>
             <p>Roasted weekly. Brewed slowly. Tasted closely.</p>
           </div>
           <div class="pillar">
             <span class="pillar-num">02</span>
-            <h4>Halal kitchen</h4>
+            <h3>Halal kitchen</h3>
             <p>Every ingredient traced. Every recipe approved.</p>
           </div>
           <div class="pillar">
             <span class="pillar-num">03</span>
-            <h4>Made by hand</h4>
+            <h3>Made by hand</h3>
             <p>Pastries shaped at dawn. Bread out by 7am.</p>
           </div>
         </div>
@@ -375,12 +443,12 @@
         <h2 class="section-title">Come find <em>us</em>.</h2>
 
         <div class="visit-block">
-          <h4>Location</h4>
+          <h3>Location</h3>
           <p>South C<br/>Nairobi, Kenya</p>
         </div>
 
         <div class="visit-block">
-          <h4>Opening Hours</h4>
+          <h3>Opening Hours</h3>
           <ul class="hours">
             <li><span>Monday - Thursday</span><span>7am - 10pm</span></li>
             <li><span>Friday</span><span>7am - 11pm</span></li>
@@ -389,7 +457,7 @@
         </div>
 
         <div class="visit-block">
-          <h4>Phone &amp; Email</h4>
+          <h3>Phone &amp; Email</h3>
           <p class="visit-contact-line">
             <a href="tel:+254723334445">+254 723 334 445</a>
           </p>
@@ -399,7 +467,7 @@
         </div>
 
         <div class="visit-block">
-          <h4>Follow</h4>
+          <h3>Follow</h3>
           <div class="socials">
             <a href="https://www.instagram.com/nov.acafe?igsh=MXRieXlxa2hzMDR5Mw==" aria-label="Instagram" target="_blank" rel="noopener">Instagram</a>
             <a href="https://www.tiktok.com/@nov.acafe" aria-label="TikTok" target="_blank" rel="noopener">TikTok</a>
@@ -434,6 +502,11 @@
       <div class="visit-form-wrap">
         <form class="visit-form" action="https://formspree.io/f/mykodwqg" method="POST">
           <input type="hidden" name="_subject" value="New Reservation - NOVA CAFE" />
+          <!-- Honeypot: hidden from people, catches spam bots -->
+          <label class="hp-field" aria-hidden="true">
+            Leave this field empty
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+          </label>
           <h3>Reserve a Table</h3>
           <p class="form-sub">For parties up to 8. For larger events, just email us directly.</p>
 
@@ -473,11 +546,14 @@
           </label>
 
           <button type="submit" class="btn btn-primary btn-full">Request Reservation</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-foot">We'll confirm your booking within the hour.</p>
         </form>
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -507,19 +583,19 @@
 
       <div class="footer-cols">
         <div>
-          <h5>Visit</h5>
+          <h4>Visit</h4>
           <a href="#visit">South C, Nairobi</a>
           <a href="#visit">Opening Hours</a>
           <a href="#visit">Reservations</a>
         </div>
         <div>
-          <h5>Discover</h5>
+          <h4>Discover</h4>
           <a href="#menu">Menu</a>
           <a href="#story">Our Story</a>
           <a href="#gallery">Gallery</a>
         </div>
         <div>
-          <h5>Contact</h5>
+          <h4>Contact</h4>
           <a href="tel:+254723334445">+254 723 334 445</a>
           <a href="mailto:novacafe.ke@gmail.com">novacafe.ke@gmail.com</a>
         </div>
@@ -527,11 +603,11 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 NOVA CAFE. All rights reserved.</span>
-      <span class="arabic-mark">نوفا</span>
+      <span class="arabic-mark" aria-hidden="true">نوفا</span>
     </div>
   </footer>
 
-  <script src="menu.js"></script>
-  <script src="script.js"></script>
+  <script src="menu.js?v=3"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

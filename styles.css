@@ -3,6 +3,26 @@
    Palette: cream, bronze, rich brown
    ============================================ */
 
+/* Metric-matched local fallbacks: sized so text occupies the same width
+   before the web fonts arrive, preventing layout shift on font swap.
+   (size-adjust values measured against the real web fonts.) */
+@font-face {
+  font-family: 'Cormorant Garamond Fallback';
+  src: local('Georgia');
+  size-adjust: 88.7%;
+  ascent-override: 103.7%;
+  descent-override: 32.7%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 106.6%;
+  ascent-override: 91%;
+  descent-override: 22.5%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Colors - dark coffee-brown theme */
   --bg: #2B1E17;
@@ -20,8 +40,8 @@
   --line: rgba(196, 154, 108, 0.18);
 
   /* Type */
-  --font-display: 'Cormorant Garamond', 'Cormorant Infant', Georgia, serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Cormorant Garamond', 'Cormorant Garamond Fallback', Georgia, serif;
+  --font-body: 'Inter', 'Inter Fallback', -apple-system, sans-serif;
 
   /* Layout */
   --max: 1320px;
@@ -32,6 +52,39 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
+
+/* Skip link - hidden until focused, for keyboard & screen-reader users */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 300;
+  background: var(--bronze);
+  color: #1a1008;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 0; }
+
+/* Visible keyboard focus without affecting mouse users */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--bronze);
+  outline-offset: 3px;
+}
+
+/* Honeypot field - kept out of sight and out of the tab order */
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
 
 body {
   background: var(--bg);
@@ -298,6 +351,7 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
 .hero {
   position: relative;
   min-height: calc(100vh - 90px);
+  min-height: calc(100svh - 90px); /* stable height while mobile URL bar collapses */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -687,7 +741,7 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   color: var(--bronze);
   margin-bottom: 0.6rem;
 }
-.pillar h4 {
+.pillar h3 {
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 500;
@@ -1471,7 +1525,7 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   border-bottom: 1px solid var(--line);
 }
 .visit-block:last-child { border-bottom: none; }
-.visit-block h4 {
+.visit-block h3 {
   font-size: 0.78rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1637,6 +1691,29 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   font-style: italic;
 }
 
+/* Inline submit feedback - hidden until the script sets success/error */
+.form-status {
+  display: none;
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-radius: 6px;
+}
+.form-status.success {
+  display: block;
+  background: rgba(196, 154, 108, 0.12);
+  border: 1px solid rgba(196, 154, 108, 0.4);
+  color: var(--cream);
+}
+.form-status.error {
+  display: block;
+  background: rgba(184, 85, 44, 0.14);
+  border: 1px solid rgba(184, 85, 44, 0.55);
+  color: #eec0ab;
+}
+
 /* ============================================
    RESPONSIVE SECTION SPACING
    ============================================ */
@@ -1769,10 +1846,10 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
     justify-content: center;
   }
 
-  /* Stats row: smaller numerals, comfortable wrap-friendly gap */
-  .hero-meta { gap: 1.1rem; }
+  /* Stats row: smaller numerals; drop the separators so the row wraps cleanly */
+  .hero-meta { gap: 0.9rem 1.75rem; }
   .meta-num { font-size: 1.15rem; }
-  .meta-sep { height: 16px; }
+  .hero-meta > .meta-sep { display: none; } /* outranks .hero-meta > div { display:flex } */
   .meta-label { font-size: 0.64rem; }
 
   /* Eyebrow lines: shorter on tiny screens */
@@ -1871,7 +1948,7 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 }
 
-.footer-cols h5 {
+.footer-cols h4 {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -1898,13 +1975,13 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: rgba(250, 245, 236, 0.3);
+  color: rgba(250, 245, 236, 0.55); /* 0.3 failed WCAG AA contrast on #3E2C23 */
   letter-spacing: 0.04em;
 }
 .arabic-mark {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  color: rgba(201, 168, 106, 0.5);
+  color: rgba(201, 168, 106, 0.62); /* 0.5 sat at 2.6:1; 0.62 clears the WCAG 3:1 large-text line */
   letter-spacing: 0;
 }
 
@@ -1981,6 +2058,10 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  html { scroll-behavior: auto; }
+  /* Stop the marquee entirely rather than looping it at near-zero duration */
+  .marquee-track { animation: none; }
 }

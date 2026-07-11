@@ -29,8 +29,8 @@ const MENU = [
       { name: "Espresso",          desc: "A single, slow extraction.",                          price: "200 / 350", tag: "",                       img: "images/menu/espresso.webp" },
       { name: "Cappuccino",        desc: "Soft foam, fine cocoa, an old friend.",               price: "280 / 350", tag: "",                       img: "images/menu/cappuccino.webp" },
       { name: "Latte",             desc: "Long and creamy. Vanilla or caramel.",                price: "300 / 400", tag: "", popular: true,         img: "images/menu/latte.webp" },
-      { name: "Spanish Latte",     desc: "Espresso, steamed milk, a thread of condensed milk.", price: "300 / 400", tag: "",                       img: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=300&q=80" },
-      { name: "Americano",         desc: "Espresso lengthened with hot water.",                 price: "220 / 300", tag: "",                       img: "https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=300&q=80" },
+      { name: "Spanish Latte",     desc: "Espresso, steamed milk, a thread of condensed milk.", price: "300 / 400", tag: "",                       img: "images/menu/spanish-latte.webp" },
+      { name: "Americano",         desc: "Espresso lengthened with hot water.",                 price: "220 / 300", tag: "",                       img: "images/menu/americano.webp" },
       { name: "Hot Chocolate",     desc: "Dark chocolate, steamed milk, a quiet finish.",       price: "350 / 500", tag: "",                       img: "images/menu/hot-chocolate.webp" },
       { name: "Mocha",             desc: "House dark chocolate, espresso, steamed milk.",       price: "250 / 350", tag: "",                       img: "images/menu/mocha.webp" },
       { name: "Karak Tea",         desc: "Black tea, evaporated milk, cardamom, slow simmer.",  price: "250 / 350", tag: "",                       img: "images/menu/karak-tea.webp" }
@@ -47,7 +47,7 @@ const MENU = [
       { name: "Iced Spanish Latte", desc: "Sweet, milky, the crowd favourite over ice.",      price: "580", tag: "", popular: true,            img: "images/menu/iced-spanish-latte.webp" },
       { name: "Iced Cappuccino",    desc: "Espresso, cold milk, a soft cap of foam.",         price: "300", tag: "",                          img: "images/menu/iced-cappuccino.webp" },
       { name: "Iced Americano",     desc: "Espresso, cold water, ice. Clean and bright.",     price: "270", tag: "",                          img: "images/menu/iced-americano.webp" },
-      { name: "Iced Mocha",         desc: "Dark chocolate, espresso, cold milk over ice.",    price: "400", tag: "",                          img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=300&q=80" },
+      { name: "Iced Mocha",         desc: "Dark chocolate, espresso, cold milk over ice.",    price: "400", tag: "",                          img: "images/menu/iced-mocha.webp" },
       { name: "Monte Blanc",        desc: "Iced espresso, cold milk, a cloud of whipped vanilla cream.", price: "700", tag: "",                img: "images/menu/monte-blanc.webp" },
       { name: "Nova Special Latte", desc: "Our signature iced latte, crowned with cold foam.", price: "800", tag: "signature",                img: "images/menu/nova-special-latte.webp" },
       { name: "Vanilla Shake",      desc: "Blended vanilla, cold milk, soft serve finish.",   price: "500", tag: "",                          img: "images/menu/vanilla-shake.webp" },
@@ -127,9 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
   MENU.forEach((cat, i) => {
     const tab = document.createElement("button");
     tab.className = "menu-tab" + (i === 0 ? " active" : "");
+    tab.id = "tab-" + cat.id;
     tab.dataset.target = cat.id;
     tab.textContent = cat.label;
     tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    tab.setAttribute("aria-controls", "cat-" + cat.id);
+    tab.tabIndex = i === 0 ? 0 : -1;
     tabsEl.appendChild(tab);
   });
 
@@ -138,6 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const wrap = document.createElement("div");
     wrap.className = "menu-category" + (i === 0 ? " active" : "");
     wrap.id = "cat-" + cat.id;
+    wrap.setAttribute("role", "tabpanel");
+    wrap.setAttribute("aria-labelledby", "tab-" + cat.id);
+    wrap.tabIndex = 0;
 
     const title = document.createElement("h3");
     title.className = "menu-cat-title";
@@ -207,15 +214,38 @@ document.addEventListener("DOMContentLoaded", () => {
     contentEl.appendChild(wrap);
   });
 
-  // Tab switching
+  // Tab switching (keeps class state, ARIA state, and roving tabindex in sync)
+  function activateTab(tab) {
+    tabsEl.querySelectorAll(".menu-tab").forEach(t => {
+      const selected = t === tab;
+      t.classList.toggle("active", selected);
+      t.setAttribute("aria-selected", selected ? "true" : "false");
+      t.tabIndex = selected ? 0 : -1;
+    });
+    document.querySelectorAll(".menu-category").forEach(c => c.classList.remove("active"));
+    document.getElementById("cat-" + tab.dataset.target).classList.add("active");
+    // Keep the active tab visible in the scrollable strip on mobile
+    tab.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }
+
   tabsEl.addEventListener("click", e => {
     const tab = e.target.closest(".menu-tab");
-    if (!tab) return;
+    if (tab) activateTab(tab);
+  });
 
-    document.querySelectorAll(".menu-tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".menu-category").forEach(c => c.classList.remove("active"));
-
-    tab.classList.add("active");
-    document.getElementById("cat-" + tab.dataset.target).classList.add("active");
+  // Arrow-key navigation between tabs
+  tabsEl.addEventListener("keydown", e => {
+    const tabs = [...tabsEl.querySelectorAll(".menu-tab")];
+    const current = tabs.indexOf(document.activeElement);
+    if (current === -1) return;
+    let next = null;
+    if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+    else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tabs.length - 1;
+    if (next === null) return;
+    e.preventDefault();
+    tabs[next].focus();
+    activateTab(tabs[next]);
   });
 });
