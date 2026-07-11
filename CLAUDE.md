@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 NOVA CAFE is a static single-page website for a premium halal cafe in South C, Nairobi. No build step, no framework, no dependencies — open `index.html` directly in a browser to preview.
 
-**Live site:** `https://novacafe-design.github.io/Novacafe-website/`
+**Live site:** `https://novacafe.co.ke/` (custom domain via Cloudflare, origin GitHub Pages)
 **GitHub repo:** `https://github.com/novacafe-design/Novacafe-website`
 **Contact:** `novacafe.ke@gmail.com`
 
@@ -48,33 +48,47 @@ Item shape:
 
 ### How images work
 
-All images use CSS `background-image`, not `<img>` tags (except menu item thumbnails in the JS renderer). Key slots in `styles.css`:
+Content images are `<img>` tags (lazy-loaded, `decoding="async"`); a few section backdrops are CSS `background-image`:
 
-| CSS selector | Section | Current source |
+| Slot | Type | Current source |
 |---|---|---|
-| `.hero-image` | Full-bleed hero | `images/nova-exterior.jpeg` (actual cafe photo) |
-| `.story-img` | Story section portrait | Unsplash URL |
-| `.g1`–`.g6 .g-img` | Gallery grid | `.g6` uses `images/nova-exterior.jpeg`; others are Unsplash URLs |
+| Hero | `<img class="hero-image">` with `srcset` (768/1280/1536) | `images/branded cup NOVA*.webp` |
+| Story portrait | CSS bg `.story-img` | `images/COFFEE BREWER.webp` |
+| Feature strip | CSS bg `.feature` | `images/new images/hot coffee branded.webp` |
+| Brand strip | CSS bg `.brandstrip-img` | `images/COFFEE SPILLING.webp` |
+| Gallery `.g1`–`.g6` | `<img>` | local WebP photos |
+| Signature cards | `<img>` | `images/new images/*.webp` |
+| Menu thumbnails | `<img>` built by `menu.js` | `images/menu/<item-slug>.webp` |
 
-Local photos live in `images/`. Menu item thumbnails use external URLs (Unsplash) with an `onerror` fallback that shows the item's first letter.
+All photos are local WebP — no external image dependencies. Menu thumbnails have an `onerror` fallback that shows the item's first letter.
+
+**Menu image conventions** (follow these when adding new item photos):
+- Path/name: `images/menu/<kebab-case-item-name>.webp` (e.g. `iced-spanish-latte.webp`).
+- Size: 600×800 (portrait); the card crops it to 4:3 with `object-fit: cover`.
+- Format: WebP, quality ~72–75 (Pillow `method=6`), target ≤35 KB per thumbnail.
+- Section/gallery images: max 800–1200 px on the long edge, WebP q75, target ≤120 KB.
+- Keep the original photo out of git (add it to `.gitignore` like the existing originals) and commit only the optimized WebP.
 
 ### CSS design tokens
 
 All colours and spacing are CSS variables at the top of `styles.css` under `:root`. Changing a variable updates the whole site:
 
 ```css
---bronze: #a87a3d;      /* primary accent — buttons, prices, highlights */
---brown-deep: #3d2613;  /* darkest tone — headings, dark sections */
---bg: #f6efe4;          /* warm cream page background */
+--bg: #2B1E17;          /* dark coffee-brown page background */
+--bg-warm: #3E2C23;     /* lighter brown — nav (scrolled), menu section, footer */
+--bg-deep: #231610;     /* darkest brown — top bar, visit section */
+--cream: #F5EDE6;       /* headings and primary text */
+--bronze: #C49A6C;      /* primary accent — buttons, prices, highlights */
 --font-display: 'Cormorant Garamond', ...;
 --font-body: 'Inter', ...;
---max: 1320px;          /* max content width */
+--max: 1320px;          /* max content width (nav/topbar) */
+--section-max: 1200px;  /* max content width (sections) */
 --pad: clamp(1.25rem, 4vw, 3rem); /* responsive horizontal padding */
 ```
 
 ### Reservation form
 
-`handleReservation()` in `script.js` is a placeholder — it simulates a delay and resets the form. To make it functional, replace the `<form>` with a Formspree action URL (see `README.md` for instructions).
+The form posts to Formspree (`mykodwqg`, delivers to novacafe.ke@gmail.com). `script.js` submits it with `fetch` and shows an inline success/error message in `.form-status`, so visitors never leave the page; with JS disabled it falls back to a native POST to Formspree's confirmation page. It includes a `_gotcha` honeypot for spam and sets the date input's `min` to today.
 
 ## Common Edits
 
@@ -86,7 +100,11 @@ All colours and spacing are CSS variables at the top of `styles.css` under `:roo
 
 **Change hero headline or story copy** → `index.html`, `<!-- HERO -->` or `<!-- STORY -->` sections.
 
-**Add a real photo** → put it in `images/`, then update the relevant `background-image` URL in `styles.css`.
+**Add a real photo** → optimize to WebP per the conventions above, put it in `images/`, then update the `<img>` src in `index.html`/`menu.js` (or the `background-image` URL in `styles.css` for the story/feature/brandstrip backdrops).
+
+**Change opening hours** → update BOTH the `hours` list in `index.html` (Visit section), the `HOURS` table at the top of `script.js` (drives the "Open today" top bar), and the `openingHoursSpecification` in the JSON-LD block in `index.html`'s head.
+
+**After editing styles.css or the JS files** → bump the `?v=` query string on `styles.css`, `menu.js`, and `script.js` in `index.html` so Cloudflare/browser caches pick up the change.
 
 **Change social links** → `index.html`, search for `Instagram`.
 
@@ -94,13 +112,14 @@ All colours and spacing are CSS variables at the top of `styles.css` under `:roo
 
 This folder was initialized as a git repo locally (not cloned). The remote is:
 ```bash
-git remote add origin https://github.com/novacafe-design/Layali-website.git
+git remote add origin https://github.com/novacafe-design/Novacafe-website.git
 ```
 If git isn't initialized, run the above two commands before pushing.
 
 ## Pending Items
 
-- **Reservation form:** wired to Formspree (mykodwqg) — live, posting to novacafe.ke@gmail.com.
-- **Reservation form:** not wired to a real email endpoint yet.
-- **Story section image** (`.story-img`): still uses an Unsplash placeholder — replace with a real cafe interior photo.
-- **Gallery slots g1–g5**: still use Unsplash stock photos.
+(Last reviewed 2026-07-11 during the pre-launch audit.)
+
+- **Menu photos:** all 42 items now have local WebP thumbnails. Spanish Latte, Americano, and Iced Mocha use optimized copies of the former Unsplash stock shots — swap in real branded photos when available (see the menu image conventions above).
+- **Hero on very wide screens:** the largest hero variant is 1536 px; on 2K+ displays it upscales slightly. Consider exporting a 2048 px variant if ultra-wide sharpness ever matters.
+- **Cookie/consent notice:** the site runs Google Analytics (gtag) without a consent banner. Fine to launch, but worth a decision under the Kenya DPA if traffic grows.
