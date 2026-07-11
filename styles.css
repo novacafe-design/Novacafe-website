@@ -632,53 +632,6 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
   font-size: 0.85em;
 }
 
-/* ============================================
-   ORBIT BADGE - rotating text ring stamped on the
-   story image, % Arabica style. Static under
-   reduced motion.
-   ============================================ */
-.orbit-badge {
-  position: absolute;
-  top: -26px;
-  right: -14px;
-  width: 116px;
-  height: 116px;
-  z-index: 3;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
-  pointer-events: none;
-  /* clip the square SVG's rotating corners so they never widen the page */
-  overflow: hidden;
-  border-radius: 50%;
-}
-.orbit-ring {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform-origin: center;
-  animation: orbitSpin 30s linear infinite;
-}
-.orbit-text {
-  font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  fill: var(--cream);
-}
-.orbit-center {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--bronze);
-  font-size: 1.1rem;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-@keyframes orbitSpin {
-  to { transform: rotate(360deg); }
-}
-@media (max-width: 600px) {
-  .orbit-badge { width: 92px; height: 92px; top: -18px; right: -8px; }
-}
 
 /* ============================================
    SECTION COMMON
@@ -2114,6 +2067,4 @@ a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
-  /* Decorative motion stops entirely; static states are designed to look intentional */
-  .orbit-ring { animation: none; }
 }
