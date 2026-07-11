@@ -69,6 +69,10 @@ All photos are local WebP — no external image dependencies. Menu thumbnails ha
 - Section/gallery images: max 800–1200 px on the long edge, WebP q75, target ≤120 KB.
 - Keep the original photo out of git (add it to `.gitignore` like the existing originals) and commit only the optimized WebP.
 
+**Adding/replacing a menu photo — the short version:** run
+`python3 tools/optimize-menu-photo.py <original-photo> "<Item Name>"`
+It crops/resizes/compresses to the conventions above and writes `images/menu/<kebab-name>.webp`. Replacing an existing item's photo (same item name) needs **no code change** — just commit the new .webp and push. A brand-new item also needs its `img:` path set in the `MENU` array in `menu.js`. Images have no `?v=` cache-busting, so a replaced same-name photo can show stale for ~10 minutes after deploy (hard-refresh to check immediately).
+
 ### CSS design tokens
 
 All colours and spacing are CSS variables at the top of `styles.css` under `:root`. Changing a variable updates the whole site:
